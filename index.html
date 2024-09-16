@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Quiz O'Clock</title>
+    <style>
+        body{
+            background-color: whitesmoke;
+        }
+        .quiz{
+            width: 555px;
+            height: 555px;
+            border-radius: 22px;
+            background: linear-gradient(lightgrey, black);
+            margin: auto;
+            padding: 7px;
+        }
+        header{
+            text-align: center;
+            padding-top: 55px;
+            color: lightgrey;
+            font-size: 47px;
+            padding-bottom: 11px;
+        }
+        span{
+            color: black;
+        }
+        h1{
+            text-align: center;
+        }
+        li{
+            font-size: 33px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #start{
+            font-size: 33px;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(lightgrey, black);
+            border: 0;
+            border-radius: 3px;
+            display: block;
+            margin: auto;
+            margin-top: 177px;
+            color: white;
+        }
+        #start:hover{
+            color: black;
+            transition: color 0.5s ease-in;
+        }
+        button:hover{
+          color: green;
+        }
+    </style>
+</head>
+<body>
+    <header>Quiz <span>O'Clock</span></header>
+    <div class='quiz'>
+        <button id='start' onclick='start()'>Start</button>
+    </div>
+
+</body>
+</html>
+<script>
+    const quiz = {
+  questions: [
+    {
+      question: '<h1>How many genders are there?</h1>',
+      options: [
+        { label: '1', value: '1'},
+        { label: '2', value: 'real'},
+        { label: '3', value: '3'},
+        { label: '4', value:'4'}
+      ]
+    },
+    {
+      question: 'What is the capital of Nigeria?',
+      options: [
+        { label: 'Oyo', value: '1'},
+        { label: 'Kwara', value: '2'},
+        { label: 'Abuja', value: 'real'},
+        { label: 'Lagos', value:'4'}
+      ]
+    },
+    {
+      question: 'What Planet are we in ?',
+      options: [
+        { label: 'Earth', value:'real'},
+        { label: 'Venus', value:'2'},
+        { label: 'Mercury', value:'3'},
+        { label: 'Mars', value:'4'}
+      ]
+    }
+  ]}
+
+  let quizindex = 0
+  function start() {
+    display()
+
+  }
+
+  function display() {
+    let quizbox = document.querySelector('.quiz')
+    quizbox.innerHTML = `<h1>${quiz.questions[quizindex].question}</h1>`
+    
+
+    quiz.questions[quizindex].options.forEach(option => {
+      quizbox.innerHTML += `<button id="ans" style="margin: 11px; border: none; font-size: 22px; background: none; font-weight: 600;" onclick='opt("${option.value}")'>${option.label}</button><br>`;
+    })
+   quizbox.innerHTML += `<button onclick = 'next()' >Next</button>`
+   quizbox.innerHTML += `<button onclick = 'finish()' >Submit</button>`
+   quizindex++
+  }
+
+  let clicked = 0
+  function next() {
+    let quizbox = document.querySelector('.quiz')
+    clicked++
+
+    if (clicked <= 3) {
+      display()
+    }
+    else if (clicked >= 4) {
+      alert('no more question. please submit')
+    }
+
+  }
+
+  let score = 0
+  function opt(value) {
+    if (value === 'real') {
+      score++
+      console.log(score);
+    }
+
+    if (quizindex < 3) {
+      display()
+    } else if (quizindex == 3) {
+      alert('finish')
+      finish()
+    }
+  }
+
+  function finish() {
+    let quizbox = document.querySelector('.quiz')
+
+    alert(`you got ${score}/3`)
+    quizbox.innerHTML = `<h1 style= "font-size: 157px;">${score}</h1><br>
+    <button onclick = "restart()">Restart</button>
+    `
+  }
+
+  function restart() {
+    quizindex = 0
+    display()
+  }
+    
+
+</script>
